@@ -1,0 +1,29 @@
+<div id="view_responseList" data-role="Page" class="twelve columns partnerName area">
+        	<div class="main">
+		    <!-- <h4 data-translation-id="EditRespMsgRsp">Responses can only be edited as long as they have not been sent for upload to the server.
+             All records uploaded successfully will disappear from this screen.</h4> -->
+            	<h2 data-translation-id="UserResponses">User's Responses</h2>
+                        <div class="additional-options">
+            
+            <ul>
+                <li><a data-events="{click: '_deleteHistoryAsyncComplete'}" href="#" class="ion-trash-a"><em>Delete</em></a></li>    
+            </ul>
+        </div>
+                <ul data-bind="{context:'this'}">
+                    <li data-item>
+                        <input type="checkbox" name="bulkdel" class="bulkdel styled bulkdel-{path: 'id'}" id="{path: 'id'}" data-events="{change: '_checkChangedResponse'}" />                    	
+                    	<a href="#" data-events="{click: '_responseItemClicked'}">
+                        <!--<img class="bulkdel" src="images/bulkdelete.svg" align="right" /></a>-->
+                            
+                    		<div class="userResponsesImage">
+                                
+                    			<img data-fullpath="{path:'imageFullPath'}"id="{path: 'surveyTakenAt'}"  alt="">
+                    		</div>
+                    		<div class="userResponsesEmail">
+                    			{path:'newemail', func: '_getEmail'}
+                    		</div>                    		
+                    	</a>
+                    </li>
+                </ul>
+            </div>	       
+</div>

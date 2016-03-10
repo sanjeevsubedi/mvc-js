@@ -1,0 +1,470 @@
+﻿/*
+Author: Dev Bahadur Khadka
+This is a jquery widget that provides functionality like
+ -- Organizing code in MVC pattern
+ -- Loading html blocks (pages) using ajax.
+ -- Navigating through pages
+ -- Declarative data binding to html elements
+
+*/
+(function ($) {
+    var curActivePage = null;
+    var historyStack = new Array();
+    $.widget("ui.mainController", {
+        //defaul options
+        options: {
+            container: ".main[data-role='MasterPage']", //container of all pages
+            holder: "#dynamicContent",
+            model: null, //model needed by this controller/view 
+            pushInHistoryStack: true
+        },
+        //constructor
+        _create: function () {
+            this._container = $(this.options.container);
+            this._pageHolder = $(this.options.holder + ">#transitionHolder");
+            if (this._pageHolder.length == 0) {
+                $(this.options.holder).html('<div id="transitionHolder"></div>')
+                this._pageHolder = $(this.options.holder + ">#transitionHolder");
+            }
+            $("[data-translation-id]", this.element).each(function () {
+                var ele = $(this);
+                var tid = ele.attr("data-translation-id");
+                if (ele.prop("tagName") == "INPUT") {
+                    ele.attr("placeholder", langMgr.getTranslation(tid));
+                }
+                else {
+                    $(this).html(langMgr.getTranslation(tid));
+                }
+            });
+            if (this.element.is("[data-role='Page']")) {
+                this.element.data("innerHtml", this.element.html())
+            }
+        },
+        //called when widget is called with no parameter of only options after widget is created 
+        _init: function () {
+            this.bind();
+        },
+        bind: function () {
+            this._initForDataBind();
+            this._bindEvents();
+            //var mySelect = $('select').fancySelect();
+            //mySelect.trigger('update');
+            $('#view_surveyList select').customSelect();
+            $(".customSelectInner").text(langMgr.getCurLang().name);
+        },
+        /*This method cleans the html of databound element and revert it to html to the one before databound, so that new data can be bound. 
+        The data binding can be done from inner element to outer.  NOTE: As databound element is removed and reinjected events and data added to element will be gone
+        so we need to do this in _init method of page*/
+        _initForDataBind: function () {
+            var me = this;
+            //this.element.empty();
+            var innHtml = this.element.data("innerHtml");
+            if (!innHtml) {
+                innHtml = this.element.html();
+            }
+            this.element.html(innHtml);
+
+            var loop = function (rootElement) {
+                this._dataBoundElementsPerLevel = new Array();
+                var selector = "[data-bind]";
+                var level = 0;
+                while (true) {
+                    var elements = $(selector, rootElement);
+                    if (elements.length > 0) {
+                        this._dataBoundElementsPerLevel.push(elements);
+                        if (level > 0) {
+                            this._dataBoundElementsPerLevel[level - 1] = this._dataBoundElementsPerLevel[level - 1].not(this._dataBoundElementsPerLevel[level]);
+                        }
+                        selector += " [data-bind]";
+                        level++;
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+
+                if (this._dataBoundElementsPerLevel.length>0) {
+                    this._dataBoundElementsPerLevel[0].each(recursiveBind);
+                }
+                function recursiveBind(i) {
+                    var bindStr = $(this).attr('data-bind');
+
+                    var innerHtml = $(this).html();
+                    //console.log(innerHtml.replace(/tempInnerDataBindPath/g, "path"));
+                    this.innerHTML = innerHtml.replace(/tempInnerDataBindPath/g, "path");
+
+
+                  
+
+                    var bind = "";
+
+                    try{
+                        var bind = eval("(" + bindStr + ")");
+                    }
+                    catch(e){
+                        console.log('Syntax error in "data-bind" attribute - "' + bindStr + '" ' + e.message);
+                    }
+
+                    var data = null;
+                    if (!bind.context || "" == bind.context || "this" == bind.context) {
+                        data = me.options.model;
+                    }
+                    else if (/^~\./.test(bind.context)) { //bind relative to current context
+                        var dataContext = $(this).parent().closest("[data-item], [data-bind]").data("context");
+                        
+                        try {
+                            data = eval(bind.context.replace(/^~\./, "dataContext."));
+                        }
+                        catch (e) {
+                            console.log("could not evaluate \"" + bind.context + "\"of the parents data context.");
+                        }
+                    }
+                    else {
+                        try {
+                            data = eval("me.options.model." + bind.context);
+                        }
+                        catch (e) {
+                            console.log("could not evaluate \"" + bind.context + "\"of the model");
+                        }
+                    }
+
+
+
+                    var selector = "[data-bind]";
+                    var elementsInLevel = [];
+                    var level = 0;
+                    while (true) {
+                        var elements = $(selector, this);
+                        if (elements.length > 0) {
+                            elementsInLevel.push(elements);
+                            if (level > 0) {
+                                elementsInLevel[level - 1] = elementsInLevel[level - 1].not(elementsInLevel[level]);
+                            }
+                            selector += " [data-bind]";
+                            level++;
+                        }
+                        else {
+                            break;
+                        }
+                    }
+
+                    //this block hides any inner data bound items so that can be bound recursively
+                    for (var lvl = 0; lvl < elementsInLevel.length; lvl++) {
+                        var elementsInCurLevel = elementsInLevel[lvl];
+                        elementsInCurLevel.each(function () {
+                            var html = $(this).html();
+                            this.innerHTML = html.replace(/\{\s*path\s*:\s*'(.*?)'(\s*,\s*func\s*:\s*'(\w+(\w\d)?)')?\s*\}/g, function (match, $1, $2, $3, offset, original) {
+                                var replaceWith = "";
+                                var levelReg = new RegExp("^(~\.){" + (lvl + 1) + "}([^~])");
+                                if ($1.match(levelReg)) {
+                                    $1 = $1.replace(levelReg, function (match, m1, m2, offset, original) {
+                                        return m2;
+                                    });
+                                    replaceWith = "{path: '" + $1 + "'" + ($3 ? ", func: '" + $3 + "'" : "") + "}";
+                                }
+                                else {
+                                    replaceWith = "{tempInnerDataBindPath: '" + $1 + "'" + ($3 ? ", func: '" + $3 + "'" : "") + "}";
+                                }
+                                return replaceWith;
+                            });
+                        });
+                    }
+
+                       
+                  
+
+                    var newElement = $(this);
+                    if (data) {
+                        if ($.isArray(data)) {
+                            /*var outerHtml = $(this).data("outerHTML");
+    
+                            if (outerHtml) {
+                            $(this).html($(outerHtml).html());
+                            }
+                            else {
+                            outerHtml = this.outerHTML;
+                            $(this).data("outerHTML", outerHtml);
+                            }*/
+                            var item = $(this).children("[data-item]")
+                            if (item.length > 0) {
+                                newElement = me.bindData(item.get(0), data);
+                            }
+                            else {
+                                console.log('No element with attribute "data-item" found inside array bound element');
+                            }
+                        }
+                        else {
+                            newElement = me.bindData(this, data);
+
+                        }
+                    }
+                    else {
+                        $(this).hide();
+                        console.log("data is undefined");
+                    }
+                    proxyLoop(newElement);
+
+                }
+            }
+            var proxyLoop = $.proxy(loop, this);
+            proxyLoop(this.element);
+        },
+        
+        bindData: function (domObj, data) {
+            var me = this;
+            var arrayData = data;
+            var dataIsArray = $.isArray(data);
+            if (!dataIsArray) {
+                arrayData = new Array(data);
+            }
+            //var newElement = domObj;
+            for (var key in arrayData) {
+                var itemData = arrayData[key];
+
+                /*var outerHtml = $(domObj).data("outerHTML");
+                if (!outerHtml || $.isArray(data)) {
+                outerHtml = domObj.outerHTML;
+    
+                }*/
+                var outerHtml = domObj.outerHTML;
+                var newHtml = outerHtml.replace(/\{\s*path\s*:\s*'(.*?)'(\s*,\s*func\s*:\s*'(\w+(\w\d)?)')?\s*\}/g, function (match, $1, $2, $3, offset, original) {
+                    if ($1 == "" || $1 == "this") {
+                        bindValue = itemData;
+                    }
+                    else {
+                        bindValue = eval("itemData." + $1);
+                    }
+                    if ($3) {
+                        var bindFunc = me[$3];
+                        var proxyFunc = $.proxy(bindFunc, me);
+                        bindValue = proxyFunc(bindValue, data, key);
+                    }
+                    return bindValue;
+                });
+                var newElement = $(newHtml);
+
+                //TODO: assumed that order of the elements on two jquery selector result will be same, should find a better way
+                var boundObjs = $("[data-item], [data-bind]", domObj);
+                $("[data-item], [data-bind]", newElement).each(function (i) {
+                    $(this).data("context", boundObjs.eq(i).data("context"));
+                });
+
+                
+                $(domObj).before(newElement);
+                newElement.data("context", itemData);
+                /*if (newElement.is("[data-bind]")) {
+                newElement.data("outerHTML", outerHtml);
+                }*/
+                
+            }
+
+            $(domObj).remove();
+            var retVal;
+            if (dataIsArray) {
+                retVal = (newElement && newElement.parent().closest) ? newElement.parent().closest("[data-bind]") : $("<div/>");
+            }
+            else {
+                retVal = (newElement && newElement.closest) ? newElement.closest("[data-bind]") : $("<div/>");
+            }
+            return retVal;
+        },
+        /*
+        Binds events set in the html to elements, the events will be automaticall Unbinded when widget destroyed.
+        */
+        _bindEvents: function () {
+            var me = this;
+            this._elementsWithEvents = $("[data-events]", this.element);
+            this._elementsWithEvents.each(function () {
+                var curElement = $(this);
+                var events = eval("(" + curElement.attr("data-events") + ")");
+                for (var event in events) {
+                    var handlerName = events[event];
+                    var handler = me[handlerName];
+                    if (handler) {
+                    	if(isPhoneGap) {
+                    		 if(event == "click" && device.platform.toLowerCase() == "android") {
+                    			event = "touchend";
+                    		}
+                    	}
+                        curElement.unbind(event + "." + me.widgetName);
+                        curElement.bind(event + "." + me.widgetName, function (e) {
+                            var proxyFunc = $.proxy(handler, me)
+                            proxyFunc(this, e);
+                        });
+                    }
+                }
+            });
+        },
+        _unbindEvents: function () {
+            var me = this;
+            if (this._elementsWithEvents) {
+                this._elementsWithEvents.each(function () {
+                    var curElement = $(this);
+                    var events = eval("(" + curElement.attr("data-events") + ")");
+                    for (var event in events) {
+                        curElement.unbind(event + "." + me.widgetName);
+                    }
+                });
+            }
+        },
+        //destructor
+        destroy: function () {
+            $.Widget.prototype.destroy.call(this);
+            this._unbindEvents();
+        },
+        navigateTo: function (pageName, model) {
+            //console.log("navigating to " + pageName)
+            var me = this;
+            this._intervalShowPageLoading = setTimeout(function () { me._showLoading(true); }, 200);
+            var page = this._pageHolder.find("#view_" + pageName + "[data-role='Page']")
+            if (curActivePage) {
+                this._prevPageInfo = curActivePage._pageInfo;
+                this._prevPageInfo.savedData = curActivePage._onSaveData();
+            }
+            if (page.length > 0) {
+                me.showPage(pageName, model, "forward");
+                var mySelect = $('#view_allquestions select').fancySelect();
+                mySelect.trigger('update');
+            }
+            else {
+                $.ajax({
+                    url: "views/" + pageName + ".html",
+                    type: "GET",
+                    dataType: "text",
+                    beforeSend: function () {
+                        me._pageHolder.html('<div class="content-ajax-loader"><img src="images/ajax-loader.gif"/></div>');
+                        me._pageHolder.css({'min-height':'300px',
+                    	'position':'relative',
+                        'background': '#ecf0f1',
+                        'margin': '0 10px',
+                        '-moz-border-radius': '8px',
+                        '-webkit-border-radius': '8px',
+                        '-ms-border-radius': '8px',
+                        'border-radius': '8px'})
+
+                    },
+                    success: function (response) {
+                        var respHtml = $(response);
+                        me._pageHolder.css({'background':'none','margin':'0'});
+                        //respHtml.css({ display: "none" });
+                        me._pageHolder.html(respHtml);
+                        //console.log("page appended")
+                        var page = me._pageHolder.find("#view_" + pageName + "[data-role='Page']");
+                        var widget = $.proxy(page[pageName], page);
+
+                        widget({
+                            model: model
+                        });
+
+                        //TODO: Hardcoded transition
+                        /*me._slider = me._container.horiz_verti_slider({
+                            scrollWrapper: "#transitionHolder"
+                        }).data("horiz_verti_slider");*/
+
+                        me.showPage(pageName, model, "forward");
+                        var mySelect = $('#view_allquestions select').fancySelect();
+                        mySelect.trigger('update');
+                    },
+                    error: function (e, msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+        },
+        goBack: function () {
+            var pageInfo = historyStack.pop();
+            if (pageInfo) {
+                this.showPage(pageInfo.page, pageInfo.model, "backward", pageInfo.savedData);
+            }
+        },
+        showPage: function (pageName, model, dir, savedData) {
+            var page = this._pageHolder.find("#view_" + pageName + "[data-role='Page']");
+            var widget = $.proxy(page[pageName], page);
+            var prevPage = curActivePage;
+            curActivePage = widget({
+                model: model
+            }).data(pageName);
+            //var prevPage = $("[data-role='Page']").not(page);
+            //page.show("fast");
+            //prevPage.hide('fast');
+
+           /* var curIndex = $("[data-role='Page']", this._pageHolder).index(page[0]);
+
+            if (!this._slider) {
+                this._slider = this._container.horiz_verti_slider({
+                    scrollWrapper: "#transitionHolder"
+                }).data("horiz_verti_slider");
+            }
+            this._slider.scrollTo(curIndex + 1);*/
+
+            curActivePage._pageInfo = { page: pageName, model: model, savedData: savedData, pushInHistoryStack: curActivePage.options.pushInHistoryStack };
+            if (this._prevPageInfo && this._prevPageInfo.pushInHistoryStack && dir == "forward") {
+                historyStack.push(this._prevPageInfo);
+            }
+
+            if (prevPage) {
+                prevPage._onNavigationComplete({ type: "out", direction: dir, savedData: savedData });
+            }
+
+            curActivePage._onNavigationComplete({ type: "in", direction: dir, savedData: savedData });
+            clearTimeout(this._intervalShowPageLoading);
+            this._showLoading(false);
+
+        },
+        _showLoading: function (show) {
+            if (!this._loadingWidget) {
+                //TODO: Hardcoded loading id
+                this._loadingWidget = $("#loadingDiv").loading().data("loading");
+            }
+            if (show) {
+                this._loadingWidget.show();
+            }
+            else {
+                this._loadingWidget.hide();
+            }
+        },
+        triggerCustomEvent: function (eventName, params) {
+            if (curActivePage[eventName]) {
+                var evnt = $.proxy(curActivePage[eventName], curActivePage)
+                evnt(params);
+            }
+        },
+        _getActivePage: function () {
+            return curActivePage;
+        },
+        _onSaveData: function () {
+            return null;
+        },
+        _onNavigationComplete: function () {
+        },
+        //custom events will be implemented by subclass
+        onNext: function () { },
+        onPrev: function () { },
+
+        /*******************Member fields****************/
+        _container: null,
+        _pageHolder: null,
+        _dataBoundElementsPerLevel: null,
+        _elementsWithEvents: null,
+        _pageInfo: null,
+        _prevPageInfo: null,
+        _intervalShowPageLoading: null,
+        _loadingWidget: null,
+        _slider: null
+
+
+    });
+
+    $(document).delegate("[data-role='navigator']", "click", function (e) {
+        e.preventDefault();
+        var pageName = $(this).attr("href");
+        curActivePage.navigateTo(pageName, null);
+    });
+
+    $(document).delegate("[data-role='goBack']", "click", function (e) {
+        e.preventDefault();
+        curActivePage.goBack();
+    });
+
+})(jQuery);

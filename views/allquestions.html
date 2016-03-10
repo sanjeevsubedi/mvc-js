@@ -1,0 +1,38 @@
+<div id="view_allquestions" data-role="Page" class="twelve columns partnerName area viewcontainer">
+    <div class="main">
+        <div class="common-wrapper">
+            
+            <div id="contactInfoStatus">
+                
+                          <a class="fancybox" rel="group" href="">
+                    <img id="cardPreview" style="width: 120px;display: none;"></img></a>
+                <span id="info"></span>    
+            </div>
+            
+            <ul data-bind="{context: 'questions'}">
+                <li id="#" style="display: {path: 'type', func: '_allowedQtypes'}" data-item>
+                    <div class="{path: 'type'} question-header">{path: 'text'} <span style="visibility: {path: 'isRequired', func: '_getRequired'}" class="required-star">*</span></div>
+                    <div class="text-holder" style="display: {path: 'type', func: '_getTextBoxDisplay'}">
+                    	<input type="text" id="txt{path: 'id'}" data-question = "{path: 'id'}" data-events="{change: '_textChanged'}" />
+                    </div>
+                    <div class="select-holder" style="display: {path: 'type', func: '_getSelectDisplay'}">
+                        <select data-question = "{path: 'id'}" name="select-custom-{path: 'id'}" id="select-custom-{path: 'id'}"  data-bind="{context: '~.options'}" data-events="{change: '_OptionSelectChanged'}">
+                        <option value="-1" data-translation-id="SelectOne">Select one...</option>    
+                        <option data-item id="opt{path: 'id'}"> {path:'text'} </option>
+                        </select>  
+                    </div>
+
+                    <div class="list-wrap" data-bind="{context:'~.options'}" style="display: {path: 'type', func: '_getCheckboxDisplay'}">
+                        <div class="checkList" data-item data-question = "{path: '~.id'}">
+                            <div data-events="{click: '_optionClicked'}">
+                                <input type="checkbox" id="chk{path: '~.id'}_{path: 'id'}" data-events="{change: '_checkChangedMulti'}" name="chk{path: '~.id'}" style="display:block" class="styled" />
+                                <label for="enterprice">{path:'text'}</label>
+                            </div>    
+                        </div>
+                    </div>
+
+                </li>
+            </ul>  
+        </div>	
+    </div>
+</div>

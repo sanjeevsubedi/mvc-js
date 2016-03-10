@@ -1,0 +1,26 @@
+<div id="view_miniSettings" data-role="Page" class="twelve columns partnerName area">
+    <div class="main">
+        <!--<h2 data-translation-id="Settings">Settings</h2>
+         <h4 data-translation-id="EditRespMsg">Responses can be edited as long as they have not been sent for upload to the server. 
+Uploads need to be triggered manually by clicking "Upload responses"
+        </h4><br /> -->
+        <div class="twelve columns scrollCnt common-wrapper">
+            <ul>
+                <li><a href="#" id="surveyList" class="button download push-four" data-events="{'click': '_surveyListClicked'}">
+                    <span data-translation-id="SurveyList">Survey List</span></a></li>
+                <li><a href="#" id="uploadOnline" class="button download push-four" data-events="{'click': '_uploadOnline'}">
+                    <span data-translation-id="UploadRespWeb">Upload Responses(Web)</span></a></li>
+                <li><a href="#" id="changeResponse" class="button download push-four" data-events="{'click': '_changeResponseClicked'}">
+                    <span data-translation-id="EditResponses">Edit Responses</span></a></li>
+                    <li><a href="#" id="logout" class="button download push-four" data-events="{'click': '_logoutClicked'}">
+                    <span data-translation-id="Logout">Logout</span></a></li>
+                    <li style="margin-top:24px;"><a href="#" id="uploadLocal" class="button download push-four" data-events="{'click': '_uploadLocal'}">
+                    <span data-translation-id="UploadRespLocal">Upload Responses(Local)</span></a></li>
+                <!--<li><a id="A1" class="button download push-four" data-events="{'click': '_uploadTemp'}">
+                    <img src="images/upload.png" alt="" class="downloadImg" />Upload Temp</a></li>-->
+                <li><a href="#" id="changeServer" class="button download push-four" data-events="{'click': '_changeServerClicked'}">
+                    <span data-translation-id="ChangeServer">Change Local Server</span></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

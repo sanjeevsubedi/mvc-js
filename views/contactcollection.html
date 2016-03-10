@@ -1,0 +1,85 @@
+<div data-role="Page" id="view_contactcollection" class="twelve columns viewcontainer">
+    <div class="main">
+        <div class="contact-collection ui-content ui-corner-all common-wrapper" data-bind="{context: 'contactColl'}">
+            <div class="contact-form">	
+                <a href="#"  data-events="{'click': '_contactFormClicked'}">
+                      <ul>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                    </ul>
+                <span data-translation-id="ContactForm">Contact Form</span>
+                </a>         
+            </div>
+            <div class= "lookup {path: 'lookup.search.value',func: '_deactivaterSearch'}">
+	            <a href="#" data-events="{'click': '_lookupClicked'}">
+                    <!-- <ul>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                    </ul>-->
+                            <svg x="0px" y="0px">
+                        
+                        <g>
+                            <path class="st0" d="M24.9,6L24.9,6C20,6,16,10,16,14.8c0,4.9,3.9,8.9,8.8,8.9h0.1c2.4,0,4.6-0.9,6.3-2.6c1.7-1.7,2.6-3.9,2.6-6.3
+                            c0-2.4-0.9-4.6-2.6-6.3C29.5,6.9,27.3,6,24.9,6z"/>
+                            <path class="st0" d="M47.9,0H8.1C3.6,0,0,3.6,0,8.1v19.7C0,32.4,3.6,36,8.1,36h39.7c4.5,0,8.1-3.6,8.1-8.1V8.1
+                            C56,3.6,52.4,0,47.9,0z M42.6,30.3l-2.3,2.3c-0.5,0.5-1.4,0.5-2,0l-0.2-0.2h0l-7.2-7.3c-1.8,1-3.8,1.6-6,1.6c0,0-0.1,0-0.1,0
+                            c-6.6,0-11.9-5.4-11.9-12C13,8.2,18.3,3,24.9,3c0,0,0.1,0,0.1,0c6.6,0,11.9,5.4,11.9,12c0,2.2-0.6,4.2-1.6,5.9l7.3,7.3l0.2,0.2
+                            C43.2,28.9,43.2,29.8,42.6,30.3z"/>
+                        </g>
+                    </svg>
+                    <span data-translation-id="LookUp">LookUp</span>
+                </a>	            
+            </div>
+            <div id="cardStatus" class="business-card {path: 'bcard.value',func: '_deactivaterCard'}">
+            
+            	<a id="captureCard" class="templateFontColor" href="#" data-events="{'click': '_captureCardClicked'}">
+            	        
+            	        <svg x="0px" y="0px">
+                            <g>
+                                <path class="st0" d="M60.9-3H21.1C16.6-3,13,0.6,13,5.1v19.7c0,4.5,3.6,8.1,8.1,8.1h39.7c4.5,0,8.1-3.6,8.1-8.1V5.1
+                                C69,0.6,65.4-3,60.9-3z M32.7,24.8v-2.1c0-1.6-1.3-2.9-2.9-2.9h-1.2l-2,3.3l-0.7-1.3l1.2-2h-1.5h-1.5l1.2,2L24.6,23l-2-3.3h-1.2
+                                c-1.6,0-2.9,1.3-2.9,2.9v1.9c-0.6-0.5-1-1.2-1-2.1V7.7c0-1.5,1.2-2.7,2.7-2.7h11c1.5,0,2.7,1.2,2.7,2.7v14.8h0
+                                C33.9,23.5,33.4,24.3,32.7,24.8z M64.7,22.2c0,0.8-0.7,1.5-1.5,1.5H39.4c-0.8,0-1.5-0.7-1.5-1.5v-0.2c0-0.8,0.7-1.5,1.5-1.5h23.8
+                                c0.8,0,1.5,0.7,1.5,1.5V22.2z M64.7,15.3c0,0.8-0.7,1.5-1.5,1.5H39.4c-0.8,0-1.5-0.7-1.5-1.5v-0.2c0-0.8,0.7-1.5,1.5-1.5h23.8
+                                c0.8,0,1.5,0.7,1.5,1.5V15.3z M64.7,8.4c0,0.8-0.7,1.5-1.5,1.5H39.4c-0.8,0-1.5-0.7-1.5-1.5V8.2c0-0.8,0.7-1.5,1.5-1.5h23.8
+                                c0.8,0,1.5,0.7,1.5,1.5V8.4z"/>
+                                <circle class="st0" cx="25.6" cy="14.3" r="4.2"/>
+                            </g>
+                        </svg>
+            	 <span data-translation-id="TakePicture">Take picture of business card</span></a>
+            </div>
+            <div class="barcode-trigger barcode {path: 'bscan.value',func: '_deactivaterScan'}">
+                <a href="#" data-events="{'click': '_scanClicked'}">
+                    <!--<ul>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                    </ul>-->
+                          <svg x="0px" y="0px">
+                        
+                        <path class="st0" d="M47.9,0H8.1C3.6,0,0,3.6,0,8.1v19.7C0,32.4,3.6,36,8.1,36h39.7c4.5,0,8.1-3.6,8.1-8.1V8.1C56,3.6,52.4,0,47.9,0
+                        z M37.8,6.5l4.4,0v18.8h-4.4V6.5z M32.2,6.5h4v18.8h-4V6.5z M28.9,6.5h1.6v18.8h-1.6V6.5z M24.2,6.5h2.9v18.8h-2.9V6.5z M20,6.5h2.6
+                        v18.8H20V6.5z M13.8,6.5h4.6v18.8h-4.6V6.5z M45.2,32h-1.5v-1.5h-32V32h-1.5v-4.8h1.5v1.5h32v-1.5h1.5V32z"/>
+                    </svg>
+                    <span data-translation-id="BadgeScan">Badge Scan</span>
+                </a>
+           </div>
+           
+        <div id="lookupdownload" class="btnLookupDownload {path: 'lookup.download.value',func: '_deactivaterDb'}">
+                <a href="#"  class="okBtn" data-translation-id="DbDownload" data-events="{click: '_lookupDownloadClicked'}">Download database</a>
+            </div>
+            
+            <div id="minisettings" class="btnLookupDownload">
+            <a href="#"  class="okBtn" data-events="{click: '_settingsMiniClicked'}" data-translation-id="Settings">Settings</a>
+        </div>
+
+        <!--<div id="clearsettings" class="btnLookupDownload">
+        <a href="#" class="okBtn" data-events="{click: '_settingsClearClicked'}" data-translation-id="ClearContact">Clear contact</a>
+    </div>-->
+            
+            </div>
+
+    </div>
+</div>

@@ -1,0 +1,164 @@
+<div data-role="Page" id="view_contact" class="twelve columns viewcontainer">
+    <div class="main">
+        
+        <div class="common-wrapper" id="contact-holder">
+            <div id="cardStatus">
+                <a class="fancybox" rel="group" href="">
+                    <img id="cardPreview" style="width: 120px;display: none;"></img></a>
+                <span id="cardUploadedInfo"></span>
+            </div>
+            
+            <div class="clear"></div>
+            <form name="entryForm" id="entryForm" method="get" action="" autocomplete="on">
+            </form>
+            <div class="clear"></div>
+        </div>
+        
+        
+        <div class="common-wrapper"id="intermediate-screen">
+            
+            <div class="success-icon"><svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" >
+                   <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                    <g id="Faircontroll_screen" sketch:type="MSArtboardGroup" transform="translate(-156.000000, -163.000000)" fill="#7ED321">
+                        <path d="M200.786,183.86 C200.786,183.86 186.67,208.46 186.426,208.68 C185.62,209.44 184.354,209.4 183.6,208.6 L174.456,200.16 C173.7,199.36 173.742,198.08 174.548,197.34 C175.354,196.58 176.62,196.62 177.376,197.42 L184.532,204.02 L197.322,181.86 C197.874,180.92 199.096,180.58 200.054,181.14 C201.01,181.68 201.338,182.92 200.786,183.86 L200.786,183.86 L200.786,183.86 Z M188,163 C170.328,163 156,177.32 156,195 C156,212.68 170.328,227 188,227 C205.672,227 220,212.68 220,195 C220,177.32 205.672,163 188,163 L188,163 L188,163 Z" id="checkmark-circle" sketch:type="MSShapeGroup"></path>
+                    </g>
+                </g>
+            </svg></div>
+            
+            <div class="failed-icon">
+			            	<svg width="64px" height="64px" viewBox="0 0 64 64" >
+			    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+			        <g id="Faircontroll_screen-Copy" sketch:type="MSArtboardGroup" transform="translate(-156.000000, -163.000000)" fill="#C6C6C6">
+			            <path d="M200.786,183.86 C200.786,183.86 186.67,208.46 186.426,208.68 C185.62,209.44 184.354,209.4 183.6,208.6 L174.456,200.16 C173.7,199.36 173.742,198.08 174.548,197.34 C175.354,196.58 176.62,196.62 177.376,197.42 L184.532,204.02 L197.322,181.86 C197.874,180.92 199.096,180.58 200.054,181.14 C201.01,181.68 201.338,182.92 200.786,183.86 L200.786,183.86 L200.786,183.86 Z M188,163 C170.328,163 156,177.32 156,195 C156,212.68 170.328,227 188,227 C205.672,227 220,212.68 220,195 C220,177.32 205.672,163 188,163 L188,163 L188,163 Z" id="checkmark-circle-faild" sketch:type="MSShapeGroup"></path>
+			        </g>
+			    </g>
+			</svg>
+            </div>
+            
+            
+            
+            <div class="contact-details">
+                 <div id="cardStatus">
+                    <a class="fancybox" rel="group" href="">
+                        <img id="cardPreview" style="width: 120px;display: none;"></img></a>
+                    <span id="cardUploadedInfo"></span>
+                </div>
+                <div id="full_name">
+	               
+	                    <span id="firstName"></span>
+	                    <span id="lastName"></span>
+	                   
+                 </div>
+                    <div id="email"></div>
+                    <div id="company"></div>
+                
+                <div class="inf">info goes here</div>
+                <div class="settings-scan">
+                    <div class="add-bcard"><svg width="32px" height="28px" viewBox="0 0 32 28">
+                                                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                            <g id="Faircontroll_screen-Copy" sketch:type="MSArtboardGroup" transform="translate(-107.000000, -408.000000)" fill="#3498DB">
+                                <g id="Camera-+-Add-Business" sketch:type="MSLayerGroup" transform="translate(75.000000, 408.000000)">
+                                    <path d="M60,4 L57,4 L56,2 C55.41101,0.83701 55.104,0 54,0 L42,0 C40.895996,0 40.529999,0.95401 40,2 L39,4 L36,4 C33.790985,4 32,5.79099 32,8 L32,24 C32,26.209015 33.790985,28 36,28 L60,28 C62.20901,28 64,26.209015 64,24 L64,8 C64,5.79099 62.20901,4 60,4 L60,4 Z M48,24 C43.582,24 40,20.417999 40,16 C40,11.582 43.582,8 48,8 C52.418,8 56,11.582 56,16 C56,20.417999 52.418,24 48,24 L48,24 Z M48,10 C44.68701,10 42,12.68701 42,16 C42,19.312988 44.68701,22 48,22 C51.31299,22 54,19.312988 54,16 C54,12.68701 51.31299,10 48,10 L48,10 L48,10 Z" id="Camera" sketch:type="MSShapeGroup"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    <p>
+                     <a href="#" data-events="{'click': '_captureCardClicked'}">
+                    Add business card photo
+                    </a>
+                    </p>
+                    </div>
+                    <div class="edit-contact"><svg width="28px" height="28px" viewBox="0 0 28 28">
+                                                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                            <g id="Faircontroll_screen-Copy" sketch:type="MSArtboardGroup" transform="translate(-238.000000, -408.000000)" fill="#3498DB">
+                                <g id="Edit-+-Imported-Layers" sketch:type="MSLayerGroup" transform="translate(206.000000, 408.000000)">
+                                    <path d="M58.0287973,1.97045883 C55.7347122,-0.325423076 54.0117621,0.0182432376 54.0117621,0.0182432376 L44.3836048,9.64726421 L33.6068141,20.4234306 L32,28 L39.5774807,26.3930418 L50.3542714,15.6200575 L59.9824287,5.99103649 C59.9808378,5.99103649 60.3260642,4.26793178 58.0287973,1.97045883 L58.0287973,1.97045883 Z M39.0988701,25.6729475 L36.4227872,26.25 C36.165725,25.7669246 35.8542844,25.2838493 35.2857815,24.7133917 C34.7156309,24.1429341 34.2328154,23.8346231 33.75,23.5741252 L34.326742,20.8982503 L35.1012241,20.125 C35.1012241,20.125 36.5562618,20.154677 38.2008004,21.8001009 C39.8436911,23.4422275 39.875,24.9013459 39.875,24.9013459 L39.0988701,25.6729475 L39.0988701,25.6729475 Z" id="Edit" sketch:type="MSShapeGroup"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    <p>
+                   <a href="#" id="response-contact" data-respId = "" data-events="{click: '_responseItemClicked'}">
+                    Edit contact details
+                    </a>
+
+                    </p>
+                    </div>
+                
+                </div>
+                <div class="clear"></div>
+            </div>
+            
+            <!--<div class="options">
+                <a href="#" data-events="{'click': '_cancelClicked'}">Cancel</a>
+                
+                <a href="#" data-events="{'click': '_onContinue'}">Continue</a>
+                <a href="#" data-events="{'click': '_settingsClicked'}">Settings</a>
+            </div>-->
+            
+            
+        </div>
+        
+        <div class="collections">
+            <ul>
+                <li class="card-bottom">
+                    <a href="#" data-events="{'click': '_captureCardClicked'}">
+                        <svg x="0px" y="0px"
+                            viewBox="13 -3 56 36" style="enable-background:new 13 -3 56 36;" xml:space="preserve">
+                            <g>
+                                <path class="st0" d="M60.9-3H21.1C16.6-3,13,0.6,13,5.1v19.7c0,4.5,3.6,8.1,8.1,8.1h39.7c4.5,0,8.1-3.6,8.1-8.1V5.1
+                                C69,0.6,65.4-3,60.9-3z M32.7,24.8v-2.1c0-1.6-1.3-2.9-2.9-2.9h-1.2l-2,3.3l-0.7-1.3l1.2-2h-1.5h-1.5l1.2,2L24.6,23l-2-3.3h-1.2
+                                c-1.6,0-2.9,1.3-2.9,2.9v1.9c-0.6-0.5-1-1.2-1-2.1V7.7c0-1.5,1.2-2.7,2.7-2.7h11c1.5,0,2.7,1.2,2.7,2.7v14.8h0
+                                C33.9,23.5,33.4,24.3,32.7,24.8z M64.7,22.2c0,0.8-0.7,1.5-1.5,1.5H39.4c-0.8,0-1.5-0.7-1.5-1.5v-0.2c0-0.8,0.7-1.5,1.5-1.5h23.8
+                                c0.8,0,1.5,0.7,1.5,1.5V22.2z M64.7,15.3c0,0.8-0.7,1.5-1.5,1.5H39.4c-0.8,0-1.5-0.7-1.5-1.5v-0.2c0-0.8,0.7-1.5,1.5-1.5h23.8
+                                c0.8,0,1.5,0.7,1.5,1.5V15.3z M64.7,8.4c0,0.8-0.7,1.5-1.5,1.5H39.4c-0.8,0-1.5-0.7-1.5-1.5V8.2c0-0.8,0.7-1.5,1.5-1.5h23.8
+                                c0.8,0,1.5,0.7,1.5,1.5V8.4z"/>
+                                <circle class="st0" cx="25.6" cy="14.3" r="4.2"/>
+                            </g>
+                        </svg>
+                        <p class="align-center" data-translation-id="TakePicture" >Business card</p></a>
+                </li>
+                <li class="scan-bottom"><a href="#" data-events="{'click': '_scanClicked'}">
+                    <svg x="0px" y="0px">
+                        
+                        <path class="st0" d="M47.9,0H8.1C3.6,0,0,3.6,0,8.1v19.7C0,32.4,3.6,36,8.1,36h39.7c4.5,0,8.1-3.6,8.1-8.1V8.1C56,3.6,52.4,0,47.9,0
+                        z M37.8,6.5l4.4,0v18.8h-4.4V6.5z M32.2,6.5h4v18.8h-4V6.5z M28.9,6.5h1.6v18.8h-1.6V6.5z M24.2,6.5h2.9v18.8h-2.9V6.5z M20,6.5h2.6
+                        v18.8H20V6.5z M13.8,6.5h4.6v18.8h-4.6V6.5z M45.2,32h-1.5v-1.5h-32V32h-1.5v-4.8h1.5v1.5h32v-1.5h1.5V32z"/>
+                    </svg>
+                    <p class="align-center" data-translation-id="BadgeScan">Badge Scan</p></a></li>
+                
+                <li class="lookup-bottom"> <a href="#" data-events="{'click': '_lookupClicked'}">
+                    
+                    <svg x="0px" y="0px">
+                        
+                        <g>
+                            <path class="st0" d="M24.9,6L24.9,6C20,6,16,10,16,14.8c0,4.9,3.9,8.9,8.8,8.9h0.1c2.4,0,4.6-0.9,6.3-2.6c1.7-1.7,2.6-3.9,2.6-6.3
+                            c0-2.4-0.9-4.6-2.6-6.3C29.5,6.9,27.3,6,24.9,6z"/>
+                            <path class="st0" d="M47.9,0H8.1C3.6,0,0,3.6,0,8.1v19.7C0,32.4,3.6,36,8.1,36h39.7c4.5,0,8.1-3.6,8.1-8.1V8.1
+                            C56,3.6,52.4,0,47.9,0z M42.6,30.3l-2.3,2.3c-0.5,0.5-1.4,0.5-2,0l-0.2-0.2h0l-7.2-7.3c-1.8,1-3.8,1.6-6,1.6c0,0-0.1,0-0.1,0
+                            c-6.6,0-11.9-5.4-11.9-12C13,8.2,18.3,3,24.9,3c0,0,0.1,0,0.1,0c6.6,0,11.9,5.4,11.9,12c0,2.2-0.6,4.2-1.6,5.9l7.3,7.3l0.2,0.2
+                            C43.2,28.9,43.2,29.8,42.6,30.3z"/>
+                        </g>
+                    </svg>
+                    
+                    
+                    <p class="align-center" data-translation-id="LookUp">LookUp</p></a></li>
+            </ul>
+            
+        </div>
+        <div class="scan-options">
+        
+        	<a class="button upload_scan" href="#" data-events="{'click': '_uploadOnline'}">Upload</a>
+                
+                <a class="button exit_scan" href="#" data-events="{'click': '_cancelClicked'}">Exit</a>
+        
+        </div>
+        
+        
+    </div>
+    <div id="next-scanholder">
+    <a id="scanOnly" data-role="button" class="next"
+           href="#" data-translation-id="Next" data-events="{'click': '_nextScanClicked'}">Next</a>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div id="view_login" data-role="Page" class="twelve columns partnerName area viewcontainer">
+    <div class="main">
+        <!--<h2 data-translation-id="Login">Login</h2>-->
+        <div class="common-wrapper">
+            <form id="login">
+                <fieldset>
+                    <input type="text" id="Email" name="Email" placeholder="Email" class="required" data-translation-id="Email"/>
+                </fieldset> 
+                <fieldset>   
+                    <input type="password" id="Password" name="Password" placeholder="Password" class="required" data-translation-id="Password"/>
+                </fieldset>
+            </form>
+            <div class="backBtn forgot-back">
+                <a class="button login" 
+                       href="#" data-events="{click: '_login'}" data-translation-id="Login">Next</a>
+                       
+                       <a class="button forgot-btn" 
+                       href="#" data-events="{click: '_forgot'}" >Send Reset Instructions</a>       
+            <a href="#" class="forgot-trigger" data-events="{click: '_forgotTrigger'}">Forgot password ?</a>
+            <a href="#" class="login-trigger" data-events="{click: '_loginTrigger'}">Log In</a>
+        </div>
+        </div>
+    </div>
+</div>

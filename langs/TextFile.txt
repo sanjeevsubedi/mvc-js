@@ -1,0 +1,3 @@
+﻿"SurveyDownloadFailed": "No se ha podido descargar un recurso requerido por la encuesta. Por favor, inténtelo de nuevo este último.",
+"ConfirmRefresh": "Todas las encuestas descargados serán borrados pero la respuesta del usuario estará intacta. ¿Desea actualizar?",
+"GoToSettings": "Si usted está en medio de la encuesta se perderá su progreso. ¿Desea continuar?",

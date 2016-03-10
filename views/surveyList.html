@@ -1,0 +1,18 @@
+<div id="view_surveyList" data-role="Page" class="twelve columns partnerName area viewcontainer">
+        	<div class="main">
+                <h2 data-translation-id="SurveyList">Survey list</h2>
+                <div class="select-holder-lang">
+                <div class="select-icon-lang">&nbsp;</div>
+                <select class="" id="langauges" data-bind="{context: 'langs'}" data-events="{change: '_langaugeChanged'}">
+                    <option data-item value="{path: 'short_name'}" class="{path: 'short_name', func: '_isSelected'}">{path: 'name'}</option>
+                </select>
+                </div>
+                </div>
+                <div class="re-fress"><a href="#" data-events="{click: '_refreshClicked'}" data-translation-id="Refresh">Refresh</a></div>
+                <div class="common-wrapper">
+                <ul id="SurveyList" class="listSurvey" data-bind="{context:'surveys'}">
+                    <li class="{path: 'translations', func: '_hideSurveys'}" data-item><a data-events="{click: '_surveyItemClicked'}" href="#">{path: 'translations', func: '_getSurveyName'}</a><span></span></li>
+                </ul>
+                </div>
+            </div>	       
+</div>
